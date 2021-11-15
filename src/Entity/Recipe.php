@@ -6,6 +6,7 @@ use App\Repository\RecipeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use JetBrains\PhpStorm\Pure;
 
 /**
  * @ORM\Entity(repositoryClass=RecipeRepository::class)
@@ -13,9 +14,6 @@ use Doctrine\ORM\Mapping as ORM;
 
 class Recipe
 {
-    public function __toString() {
-        return $this->name;
-    }
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -34,7 +32,7 @@ class Recipe
     private $description;
 
     /**
-     * @ORM\ManyToMany(targetEntity=ingredient::class, inversedBy="recipes")
+     * @ORM\ManyToMany(targetEntity=Ingredient::class, inversedBy="recipes")
      */
     private $ingredient;
 
@@ -74,14 +72,15 @@ class Recipe
     }
 
     /**
-     * @return Collection
+     * @return Collection|Ingredient[]
      */
-    public function getIngredient(): Collection
+     public function getIngredient(): ?Collection
     {
         return $this->ingredient;
+
     }
 
-    public function addIngredient(ingredient $ingredient): self
+    public function addIngredient(Ingredient $ingredient): self
     {
         if (!$this->ingredient->contains($ingredient)) {
             $this->ingredient[] = $ingredient;
@@ -90,10 +89,13 @@ class Recipe
         return $this;
     }
 
-    public function removeIngredient(ingredient $ingredient): self
+    public function removeIngredient(Ingredient $ingredient): self
     {
         $this->ingredient->removeElement($ingredient);
 
         return $this;
+    }
+    public function __toString() {
+        return $this->name;
     }
 }

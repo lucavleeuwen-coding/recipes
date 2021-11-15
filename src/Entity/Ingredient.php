@@ -12,9 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Ingredient
 {
-    public function __toString() {
-        return $this->name;
-    }
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -28,7 +26,7 @@ class Ingredient
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Recipe::class, mappedBy="ingredient")
+     * @ORM\ManyToMany(targetEntity=Recipe::class, mappedBy="Ingredient")
      */
     private $recipes;
 
@@ -79,5 +77,8 @@ class Ingredient
         }
 
         return $this;
+    }
+    public function __toString() {
+        return $this->name;
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Ingredient;
 use App\Entity\Recipe;
 use App\Form\RecipeType;
 use App\Repository\RecipeRepository;
@@ -41,14 +42,15 @@ class RecipeController extends AbstractController
             'form' => $form,
         ]);
     }
-
     #[Route('/{id}', name: 'recipe_show', methods: ['GET'])]
     public function show(Recipe $recipe): Response
     {
         return $this->render('recipe/show.html.twig', [
             'recipe' => $recipe,
         ]);
+
     }
+
 
     #[Route('/{id}/edit', name: 'recipe_edit', methods: ['GET','POST'])]
     public function edit(Request $request, Recipe $recipe): Response
@@ -79,4 +81,5 @@ class RecipeController extends AbstractController
 
         return $this->redirectToRoute('recipe_index', [], Response::HTTP_SEE_OTHER);
     }
+
 }
