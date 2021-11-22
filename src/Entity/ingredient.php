@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=IngredientRepository::class)
  */
-class Ingredient
+class ingredient
 {
 
     /**
@@ -26,7 +26,7 @@ class Ingredient
     private $name;
 
     /**
-     * @ORM\ManyToMany(targetEntity=Recipe::class, mappedBy="Ingredient")
+     * @ORM\ManyToMany(targetEntity=Recipe::class, mappedBy="ingredient")
      */
     private $recipes;
 

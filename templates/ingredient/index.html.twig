@@ -4,8 +4,12 @@
 
 {% block body %}
     <h1>Ingredient index</h1>
-
-    <table class="table">
+    {% for message in app.flashes('succes') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+    <table class="table table-hover table-dark">
         <thead>
             <tr>
                 <th>Id</th>

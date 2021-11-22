@@ -1,40 +1,60 @@
 {% extends 'base.html.twig' %}
 
 {% block title %}Recipe index{% endblock %}
+{% block head %}
+    <style>
+        .table table-borderless table-dark {
+            empty-cells: show;
+        }
+    </style>
 
+
+{% endblock %}
 {% block body %}
     <h1>Recipe index</h1>
+    {% for message in app.flashes('succes') %}
+        <div class="alert alert-success">
+            {{ message }}
+        </div>
+    {% endfor %}
 
-    <table class="table">
+    <table class="table table-hover table-dark">
         <thead>
         <tr>
             <th>Id</th>
             <th>Name</th>
             <th>Description</th>
             <th>Ingredients</th>
-            <th id="actions">actions</th>
+            <th id="actions" scope="col">Actions</th>
         </tr>
         </thead>
         <tbody>
         {% for recipe in recipes %}
-        <tr>
-            <td>{{ recipe.id }}</td>
-            <td>{{ recipe.name }}</td>
-            <td>{{ recipe.description }}</td>
-            {% for a in recipe.ingredient %}
-                <td>{{ a.name }}</td>
-            {% endfor %}
+            <tr>
+                <td>{{ recipe.id }}</td>
+                <td>{{ recipe.name }}</td>
+                <td>{{ recipe.description }}</td>
+                {% for a in recipe.ingredient %}
+                    <td>{{ a.name }}</td>
+                {% else %}
+
+                    <td>no records found</td>
+                {% endfor %}
+
+                <td id="actions">
+                    <a href="{{ path('recipe_show', {'id': recipe.id}) }}">show</a>
+                    <a href="{{ path('recipe_edit', {'id': recipe.id}) }}">edit</a>
+
+                </td>
+
+            </tr>
 
 
-            <td id="actions">
-                <a href="{{ path('recipe_show', {'id': recipe.id}) }}">show</a>
-                <a href="{{ path('recipe_edit', {'id': recipe.id}) }}">edit</a>
-
-            </td>
-            {% endfor %}
-        </tr>
-
-
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
         </tbody>
     </table>
 
