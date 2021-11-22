@@ -10,11 +10,9 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity(repositoryClass=IngredientRepository::class)
  */
-class Ingredient
+class ingredient
 {
-    public function __toString() {
-        return $this->name;
-    }
+
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -79,5 +77,8 @@ class Ingredient
         }
 
         return $this;
+    }
+    public function __toString() {
+        return $this->name;
     }
 }
