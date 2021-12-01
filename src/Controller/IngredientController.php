@@ -16,6 +16,12 @@ class IngredientController extends AbstractController
     #[Route('/', name: 'ingredient_index', methods: ['GET'])]
     public function index(IngredientRepository $ingredientRepository): Response
     {
+        if ($this->getUser() == null){
+            return $this->redirect('/login');
+        }
+        if ($this->getUser()->isVerified() == false){
+            $this->addFlash('warning', 'Uw dient eerst uw email te verifieren om naar deze pagina te kunnen! ');
+        }
         $user = $this->getUser();
         if ($user->isVerified()) {
             return $this->render('ingredient/index.html.twig', [

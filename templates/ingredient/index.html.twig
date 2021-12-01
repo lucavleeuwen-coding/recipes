@@ -3,37 +3,30 @@
 {% block title %}Ingredient index{% endblock %}
 
 {% block body %}
+
     <h1>Ingredient index</h1>
     {% for message in app.flashes('succes') %}
         <div class="alert alert-success">
             {{ message }}
         </div>
     {% endfor %}
-    <table class="table table-hover table-dark">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>actions</th>
-            </tr>
-        </thead>
-        <tbody>
+    <div class="card-deck">
         {% for ingredient in ingredients %}
-            <tr>
-                <td>{{ ingredient.id }}</td>
-                <td>{{ ingredient.name }}</td>
-                <td>
-                    <a href="{{ path('ingredient_show', {'id': ingredient.id}) }}">show</a>
-                    <a href="{{ path('ingredient_edit', {'id': ingredient.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="3">no records found</td>
-            </tr>
+            <div class="card text-white bg-dark">
+                <img class="card-img-top" src="{{ asset('img/ingredient.png') }}" alt="Recepten">
+                <div class="card-body">
+                    <h5 class="card-title">Ingredient: {{ ingredient.name }}</h5>
+                    <p class="card-text">
+                        <a href="{{ path('ingredient_show', {'id': ingredient.id}) }}">show</a>
+                        <a href="{{ path('ingredient_edit', {'id': ingredient.id}) }}">edit</a>
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted">Last updated 3 mins ago</small>
+                </div>
+            </div>
         {% endfor %}
-        </tbody>
-    </table>
+    </div>
 
-    <a href="{{ path('ingredient_new') }}">Create new</a>
+    <a style="color: white" href="{{ path('ingredient_new') }}">Create new</a>
 {% endblock %}

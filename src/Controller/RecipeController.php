@@ -18,8 +18,13 @@ class RecipeController extends AbstractController
     #[Route('/', name: 'recipe_index', methods: ['GET'])]
     public function index(RecipeRepository $recipeRepository): Response
     {
-        $user = $this->getUser();
-        if ($user->isVerified()) {
+        if ($this->getUser() == null){
+            return $this->redirect('/login');
+        }
+        if ($this->getUser()->isVerified() == false){
+            $this->addFlash('warning', 'Uw dient eerst uw email te verifieren om naar deze pagina te kunnen! ');
+        }
+        if ($this->getUser()->isVerified()) {
 
             return $this->render('recipe/index.html.twig', [
                 'recipes' => $recipeRepository->findAll(),
@@ -66,12 +71,12 @@ class RecipeController extends AbstractController
     #[Route('/{id}/edit', name: 'recipe_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Recipe $recipe): Response
     {
-        $user = $this->getUser();
+
 
         $form = $this->createForm(RecipeType::class, $recipe);
         $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid() && $user->isVerified()) {
+        if ($form->isSubmitted() && $form->isValid() && $this->getUser()->isVerified()) {
             $this->getDoctrine()->getManager()->flush();
             $this->addFlash('succes', 'Uw recept is succesvol gewijzigd! ');
 

@@ -3,8 +3,8 @@
 {% block title %}Recipe index{% endblock %}
 {% block head %}
     <style>
-        .table table-borderless table-dark {
-            empty-cells: show;
+        .a {
+            color: orange;
         }
     </style>
 
@@ -17,46 +17,27 @@
             {{ message }}
         </div>
     {% endfor %}
-
-    <table class="table table-hover table-dark">
-        <thead>
-        <tr>
-            <th>Id</th>
-            <th>Name</th>
-            <th>Description</th>
-            <th>Ingredients</th>
-            <th id="actions" scope="col">Actions</th>
-        </tr>
-        </thead>
-        <tbody>
+    <div class="card-deck">
         {% for recipe in recipes %}
-            <tr>
-                <td>{{ recipe.id }}</td>
-                <td>{{ recipe.name }}</td>
-                <td>{{ recipe.description }}</td>
-                {% for a in recipe.ingredient %}
-                    <td>{{ a.name }}</td>
-                {% else %}
-
-                    <td>no records found</td>
-                {% endfor %}
-
-                <td id="actions">
-                    <a href="{{ path('recipe_show', {'id': recipe.id}) }}">show</a>
-                    <a href="{{ path('recipe_edit', {'id': recipe.id}) }}">edit</a>
-
-                </td>
-
-            </tr>
-
-
-        {% else %}
-            <tr>
-                <td colspan="3">no records found</td>
-            </tr>
+            <div class="card text-white bg-dark">
+                <img class="card-img-top" src="{{ asset('img/recept.png') }}" alt="Recepten">
+                <div class="card-body">
+                    <h5 class="card-title">Recept: {{ recipe.name }}</h5>
+                    <p class="card-text">Beschrijving: {{ recipe.description }}</p>
+                    {% for a in recipe.ingredient %}
+                        <p class="card-text">Ingredient: {{ a.name }}</p>
+                    {% else %}
+                        <p class="card-text">No ingredients found</p>
+                    {% endfor %}
+                    <p class="card-text"><a href="{{ path('recipe_show', {'id': recipe.id}) }}">show</a>
+                        <a href="{{ path('recipe_edit', {'id': recipe.id}) }}">edit</a>
+                    </p>
+                </div>
+                <div class="card-footer">
+                    <small class="text-muted">Last updated 3 mins ago</small>
+                </div>
+            </div>
         {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('recipe_new') }}">Create new</a>
+    </div>
+    <a style="color: white" href="{{ path('recipe_new') }}">Create new</a>
 {% endblock %}
